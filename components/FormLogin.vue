@@ -11,6 +11,7 @@ const form = reactive({
     },
     error: "",
     pending: false,
+    visible: false,
 });
 
 async function onLoginClick() {
@@ -29,20 +30,32 @@ async function onLoginClick() {
         form.pending = false;
     }
 }
+
+function handleVisibility() {
+    return (form.visible = !form.visible);
+}
 </script>
 
 <template>
     <p v-if="form.error" class="mb-3 text-red-500">
         {{ form.error }}
     </p>
-    <form class="mb-3 flex flex-wrap gap-3" @submit.prevent="onLoginClick">
+    <form class="mb-3 flex flex-col gap-3" @submit.prevent="onLoginClick">
         <div class="w-full">
             <input id="remember-me" v-model="form.data.rememberMe" type="checkbox" />
 
             <label for="remember-me" class="ml-1 text-light-100">Remember me</label>
         </div>
         <input v-model="form.data.email" type="email" placeholder="Email" required />
-        <input v-model="form.data.password" type="password" placeholder="Password" required />
+        <input
+            v-model="form.data.password"
+            :type="form.visible ? 'password' : 'text'"
+            placeholder="Password"
+            required
+        />
+        <a class="text-light-100 cursor-pointer text-sm underline" @click="handleVisibility">{{
+            form.visible ? "Show" : "Hide"
+        }}</a>
         <button
             type="submit"
             :disabled="form.pending"

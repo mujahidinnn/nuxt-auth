@@ -1,5 +1,5 @@
 {
-    "name": "nuxt3-auth-example",
+    "name": "nuxt3-auth",
     "private": true,
     "scripts": {
         "build": "nuxt build",
